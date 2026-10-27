@@ -26,4 +26,6 @@ public class IncidentReportViewModel
     [DataType(DataType.DateTime)]
     [PastOrPresentDate(ErrorMessage = "Data zdarzenia nie może być datą z przyszłości.")]
     public DateTime OccurredAt { get; set; } = DateTime.Now;
+
+    public string? AttachmentPath { get; set; }
 }

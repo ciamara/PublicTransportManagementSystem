@@ -1,18 +1,26 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using TransitDesk.Web.Extensions
+@inject IViewLocalizer Localizer
+
+@{
+    var watchlist = Context.Session.GetObject<List<int>>("MonitoredVehiclesWatchlist");
+    var watchlistCount = watchlist?.Count ?? 0;
+    var currentPath = Context.Request.Path;
+}
+<!DOCTYPE html>
+<html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TransitDesk.Web</title>
+    <title>@ViewData["Title"] - TransitDesk</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TransitDesk.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransitDesk.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TransitDesk</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,10 +28,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-controller="Vehicles" asp-action="Index">@Localizer["NavFleet"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-controller="Incidents" asp-action="Create">@Localizer["NavReportIncident"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light position-relative" asp-controller="Vehicles" asp-action="Watchlist">
+                                @Localizer["NavMonitored"]
+                                <span class="badge bg-warning text-dark ms-1">@watchlistCount</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="@(currentPath)?culture=pl-PL">PL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="@(currentPath)?culture=en-US">EN</a>
                         </li>
                     </ul>
                 </div>
@@ -37,8 +59,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - TransitDesk.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container text-center py-2">
+            &copy; 2026 - TransitDesk - Gdańskie Autobusy i Tramwaje
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

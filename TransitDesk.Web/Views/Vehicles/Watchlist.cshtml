@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TransitDesk.Core.Entities.Vehicle>
+
+@{
+    ViewData["Title"] = "Monitorowane Pojazdy (Sesja)";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <p class="text-muted">Lista pojazdów obserwowanych w bieżącej sesji dyspozytorskiej.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            Brak monitorowanych pojazdów w tej sesji. Przejdź do rejestru floty i dodaj pojazdy.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="table-warning">
+                <tr>
+                    <th>Nr boczny</th>
+                    <th>Model</th>
+                    <th>Zajezdnia</th>
+                    <th>Status</th>
+                    <th>Opcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.SideNumber</strong></td>
+                        <td>@item.ModelName</td>
+                        <td>@item.DepotName</td>
+                        <td><span class="badge bg-primary">@item.ServiceStatus</span></td>
+                        <td>
+                            <form asp-action="RemoveFromWatchlist" method="post" class="d-inline">
+                                <input type="hidden" name="sideNumber" value="@item.SideNumber" />
+                                <button type="submit" class="btn btn-danger btn-sm">Usuń z listy</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary mt-2">&larr; Wróć do ewidencji floty</a>
+</div>

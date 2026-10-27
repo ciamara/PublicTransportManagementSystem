@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
+    <File Path="Dockerfile" />
+  </Folder>
   <Project Path="TransitDesk.Core/TransitDesk.Core.csproj" />
   <Project Path="TransitDesk.Tests/TransitDesk.Tests.csproj" />
   <Project Path="TransitDesk.Web/TransitDesk.Web.csproj" />
