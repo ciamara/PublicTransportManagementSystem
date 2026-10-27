@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = $"Błąd {ViewBag.StatusCode}";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-1 text-danger font-weight-bold">@ViewBag.StatusCode</h1>
+    <h2 class="h4 mb-3">Wystąpił błąd podczas przetwarzania żądania</h2>
+    <p class="lead">@ViewBag.Message</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Powrót do strony głównej</a>
+</div>
